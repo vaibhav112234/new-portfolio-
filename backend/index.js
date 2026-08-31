@@ -83,7 +83,6 @@
 
 //---------------------------------------------------------------
 
-
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -99,6 +98,7 @@ console.log("EMAIL_USER:", process.env.EMAIL_USER);
 console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 console.log("===============================");
 
+// Health check
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
@@ -106,10 +106,12 @@ app.get("/", (req, res) => {
   });
 });
 
+// Email routes
 app.use("/email", route);
 
+// IMPORTANT: Render provides PORT
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });

@@ -21,9 +21,55 @@
 // };
 
 
+// import { sendEmail } from "../utils/sendEmail.js";
+
+// export const sendEmailController = async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       email,
+//       subject,
+//       message,
+//     } = req.body;
+
+//     if (!name || !email || !subject || !message) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields are required",
+//       });
+//     }
+
+//     await sendEmail({
+//       name,
+//       email,
+//       subject,
+//       message,
+//     });
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Your message has been sent successfully",
+//     });
+//   } catch (error) {
+//     console.error("Email Controller Error:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: "Failed to send email",
+//     });
+//   }
+// };
+
+
+
 import { sendEmail } from "../utils/sendEmail.js";
 
 export const sendEmailController = async (req, res) => {
+  console.log("================================");
+  console.log("📩 EMAIL REQUEST RECEIVED");
+  console.log("Request body:", req.body);
+  console.log("================================");
+
   try {
     const {
       name,
@@ -33,11 +79,16 @@ export const sendEmailController = async (req, res) => {
     } = req.body;
 
     if (!name || !email || !subject || !message) {
+      console.log("❌ Missing fields");
+
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
+
+    console.log("✅ All fields received");
+    console.log("📧 Calling sendEmail...");
 
     await sendEmail({
       name,
@@ -46,16 +97,25 @@ export const sendEmailController = async (req, res) => {
       message,
     });
 
+    console.log("✅ Email process completed");
+
     return res.status(200).json({
       success: true,
       message: "Your message has been sent successfully",
     });
+
   } catch (error) {
-    console.error("Email Controller Error:", error);
+    console.error("================================");
+    console.error("❌ EMAIL CONTROLLER ERROR");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Response:", error.response);
+    console.error("Full error:", error);
+    console.error("================================");
 
     return res.status(500).json({
       success: false,
-      message: "Failed to send email",
+      message: error.message || "Failed to send email",
     });
   }
 };

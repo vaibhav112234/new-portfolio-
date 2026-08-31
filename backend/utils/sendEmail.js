@@ -169,8 +169,103 @@
 
 
 
+// import nodemailer from "nodemailer";
+// import { EmailMessageTemplate } from "./emailTemplate.js";
+
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+// export const sendEmail = async ({
+//   name,
+//   email,
+//   subject,
+//   message,
+// }) => {
+//   try {
+//     console.log("EMAIL_USER:", process.env.EMAIL_USER);
+//     console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
+
+//     // Verify SMTP connection
+//     await transporter.verify();
+
+//     console.log("SMTP connection verified");
+
+//     // Email to portfolio owner
+//     const portfolioEmail = {
+//       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
+//       to: process.env.EMAIL_USER,
+//       replyTo: email,
+//       subject: subject || "New Portfolio Contact Message",
+//       html: EmailMessageTemplate({
+//         name,
+//         email,
+//         subject,
+//         message,
+//       }),
+//     };
+
+//     // Thank-you email to visitor
+//     const thankYouEmail = {
+//       from: `"Vaibhav Parab" <${process.env.EMAIL_USER}>`,
+//       to: email,
+//       subject: "Thank You for Visiting My Portfolio!",
+//       html: `
+//         <div style="
+//           font-family: Arial, sans-serif;
+//           max-width: 600px;
+//           margin: auto;
+//           padding: 30px;
+//           background: #f8fafc;
+//           border-radius: 10px;
+//         ">
+//           <h2 style="color: #2563eb;">
+//             Thank You, ${name}! 🚀
+//           </h2>
+
+//           <p>
+//             I have received your message and will get back to you
+//             as soon as possible.
+//           </p>
+
+//           <br />
+
+//           <p>
+//             Best Regards,<br />
+//             <strong>Vaibhav Parab</strong>
+//           </p>
+//         </div>
+//       `,
+//     };
+
+//     // Send both emails
+//     await transporter.sendMail(portfolioEmail);
+
+//     console.log("Portfolio email sent");
+
+//     await transporter.sendMail(thankYouEmail);
+
+//     console.log("Thank-you email sent");
+
+//     return {
+//       success: true,
+//       message: "Emails sent successfully",
+//     };
+
+//   } catch (error) {
+//     console.error("Nodemailer Error:", error);
+
+//     throw error;
+//   }
+// };
+
+
+
 import nodemailer from "nodemailer";
-import { EmailMessageTemplate } from "./emailTemplate.js";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -186,30 +281,40 @@ export const sendEmail = async ({
   subject,
   message,
 }) => {
-  try {
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
-    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
+  console.log("================================");
+  console.log("📧 SEND EMAIL STARTED");
+  console.log("Visitor:", email);
+  console.log("================================");
 
-    // Verify SMTP connection
+  try {
+    console.log("🔍 Verifying SMTP connection...");
+
     await transporter.verify();
 
-    console.log("SMTP connection verified");
+    console.log("✅ SMTP connection verified");
 
-    // Email to portfolio owner
     const portfolioEmail = {
       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       replyTo: email,
       subject: subject || "New Portfolio Contact Message",
-      html: EmailMessageTemplate({
-        name,
-        email,
-        subject,
-        message,
-      }),
+      html: `
+        <h2>New Portfolio Contact Message</h2>
+
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `,
     };
 
-    // Thank-you email to visitor
+    console.log("📤 Sending portfolio email...");
+
+    const result1 = await transporter.sendMail(portfolioEmail);
+
+    console.log("✅ Portfolio email sent");
+    console.log("Message ID:", result1.messageId);
+
     const thankYouEmail = {
       from: `"Vaibhav Parab" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -223,6 +328,7 @@ export const sendEmail = async ({
           background: #f8fafc;
           border-radius: 10px;
         ">
+
           <h2 style="color: #2563eb;">
             Thank You, ${name}! 🚀
           </h2>
@@ -238,18 +344,17 @@ export const sendEmail = async ({
             Best Regards,<br />
             <strong>Vaibhav Parab</strong>
           </p>
+
         </div>
       `,
     };
 
-    // Send both emails
-    await transporter.sendMail(portfolioEmail);
+    console.log("📤 Sending thank-you email...");
 
-    console.log("Portfolio email sent");
+    const result2 = await transporter.sendMail(thankYouEmail);
 
-    await transporter.sendMail(thankYouEmail);
-
-    console.log("Thank-you email sent");
+    console.log("✅ Thank-you email sent");
+    console.log("Message ID:", result2.messageId);
 
     return {
       success: true,
@@ -257,7 +362,15 @@ export const sendEmail = async ({
     };
 
   } catch (error) {
-    console.error("Nodemailer Error:", error);
+    console.error("================================");
+    console.error("❌ NODEMAILER ERROR");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Command:", error.command);
+    console.error("Response:", error.response);
+    console.error("Response Code:", error.responseCode);
+    console.error("Full error:", error);
+    console.error("================================");
 
     throw error;
   }
