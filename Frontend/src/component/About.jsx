@@ -99,7 +99,7 @@ export default function About() {
                             <div className="grid grid-cols-2 gap-5 mt-10">
                                 {[
                                     { value: "2+", label: "Years Experience", delay: 0 },
-                                    { value: "20+", label: "Projects", delay: 0.4 },
+                                    { value: "5+", label: "Projects", delay: 0.4 },
                                 ].map((stat, idx) => (
                                     <motion.div
                                         key={idx}
