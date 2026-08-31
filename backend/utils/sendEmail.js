@@ -83,11 +83,94 @@
 
 
 
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-import { EmailMessageTemplate } from "./emailTemplate.js";
+// import nodemailer from "nodemailer";
+// import dotenv from "dotenv";
+// import { EmailMessageTemplate } from "./emailTemplate.js";
 
-dotenv.config();
+// dotenv.config();
+
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+// export const sendEmail = async ({
+//   name,
+//   email,
+//   subject,
+//   message,
+// }) => {
+//   try {
+//     // 1. Send contact message to you
+//     const portfolioEmail = {
+//       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
+//       to: process.env.EMAIL_USER,
+//       replyTo: email,
+//       subject: subject || "New Portfolio Contact Message",
+//       html: EmailMessageTemplate({
+//         name,
+//         email,
+//         subject,
+//         message,
+//       }),
+//     };
+
+//     // 2. Automatically send thank-you email to visitor
+//     const thankYouEmail = {
+//       from: `"Vaibhav Parab" <${process.env.EMAIL_USER}>`,
+//       to: email,
+//       subject: "Thank You for Visiting My Portfolio!",
+//       html: `
+//         <div style="
+//           font-family: Arial, sans-serif;
+//           max-width: 600px;
+//           margin: auto;
+//           padding: 30px;
+//           background: #f8fafc;
+//           border-radius: 10px;
+//         ">
+//           <h2 style="color: #2563eb;">
+//             Thank You, ${name}! 🚀
+//           </h2>
+//           <p>
+//             I have received your message and will get back to you as soon as possible.
+//           </p>
+
+//           <br />
+
+//           <p>
+//             Best Regards,<br />
+//             <strong>Vaibhav Parab</strong>
+//           </p>
+//         </div>
+//       `,
+//     };
+
+//     await Promise.all([
+//       transporter.sendMail(portfolioEmail),
+//       transporter.sendMail(thankYouEmail),
+//     ]);
+
+//     console.log("Contact and thank-you emails sent successfully");
+
+//     return {
+//       success: true,
+//       message: "Emails sent successfully",
+//     };
+//   } catch (error) {
+//     console.error("Error sending email:", error);
+//     throw new Error("Failed to send email");
+//   }
+// };
+
+
+
+
+import nodemailer from "nodemailer";
+import { EmailMessageTemplate } from "./emailTemplate.js";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -104,7 +187,15 @@ export const sendEmail = async ({
   message,
 }) => {
   try {
-    // 1. Send contact message to you
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
+
+    // Verify SMTP connection
+    await transporter.verify();
+
+    console.log("SMTP connection verified");
+
+    // Email to portfolio owner
     const portfolioEmail = {
       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
@@ -118,7 +209,7 @@ export const sendEmail = async ({
       }),
     };
 
-    // 2. Automatically send thank-you email to visitor
+    // Thank-you email to visitor
     const thankYouEmail = {
       from: `"Vaibhav Parab" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -135,8 +226,10 @@ export const sendEmail = async ({
           <h2 style="color: #2563eb;">
             Thank You, ${name}! 🚀
           </h2>
+
           <p>
-            I have received your message and will get back to you as soon as possible.
+            I have received your message and will get back to you
+            as soon as possible.
           </p>
 
           <br />
@@ -149,19 +242,23 @@ export const sendEmail = async ({
       `,
     };
 
-    await Promise.all([
-      transporter.sendMail(portfolioEmail),
-      transporter.sendMail(thankYouEmail),
-    ]);
+    // Send both emails
+    await transporter.sendMail(portfolioEmail);
 
-    console.log("Contact and thank-you emails sent successfully");
+    console.log("Portfolio email sent");
+
+    await transporter.sendMail(thankYouEmail);
+
+    console.log("Thank-you email sent");
 
     return {
       success: true,
       message: "Emails sent successfully",
     };
+
   } catch (error) {
-    console.error("Error sending email:", error);
-    throw new Error("Failed to send email");
+    console.error("Nodemailer Error:", error);
+
+    throw error;
   }
 };
