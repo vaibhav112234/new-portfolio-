@@ -20,24 +20,24 @@
 
 //--------------------------------------------------------------------------
 
-import "dotenv/config";
+// import "dotenv/config";
 
-import express from "express";
-import cors from "cors";
-import route from "./route/emailRoute.js";
+// import express from "express";
+// import cors from "cors";
+// import route from "./route/emailRoute.js";
 
-const app = express();
+// const app = express();
 
-app.use(cors());
-app.use(express.json());
+// app.use(cors());
+// app.use(express.json());
 
-app.use("/email", route);
+// app.use("/email", route);
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 //-----------------------------------------------------------------------------------
 
@@ -81,3 +81,35 @@ app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
 
+//---------------------------------------------------------------
+
+
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import route from "./route/emailRoute.js";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+console.log("========== ENV CHECK ==========");
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
+console.log("===============================");
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Portfolio backend is running",
+  });
+});
+
+app.use("/email", route);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
