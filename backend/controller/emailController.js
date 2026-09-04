@@ -113,6 +113,8 @@ export const sendEmailController = async (req, res) => {
     console.error("Full error:", error);
     console.error("================================");
 
+    ///test
+
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to send email",
