@@ -25,8 +25,9 @@ const MouseGlow = () => {
       aria-hidden="true"
     >
       <div
-        className="absolute w-72 h-72 rounded-full bg-blue-500/20 blur-[120px] transition-transform duration-75"
+        className="absolute w-72 h-72 rounded-full blur-[120px] transition-transform duration-75"
         style={{
+          background: "var(--theme-glow)",
           transform: `translate(${position.x - 144}px, ${
             position.y - 144
           }px)`,

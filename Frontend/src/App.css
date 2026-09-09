@@ -203,9 +203,18 @@ body {
 
 /* Gradient Background */
 .hero-bg {
-  background: radial-gradient(circle at top right, #2563eb 0%, transparent 35%),
-              radial-gradient(circle at bottom left, #06b6d4 0%, transparent 30%),
-              #020617;
+  background:
+    radial-gradient(
+      circle at top right,
+      var(--theme-primary) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      var(--theme-secondary) 0%,
+      transparent 30%
+    ),
+    #020617;
 }
 
 /* Floating Animation */
@@ -253,20 +262,20 @@ body {
 
 /* Button Glow */
 .glow-btn {
-  box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 15px var(--theme-glow);
   transition: all 0.3s ease;
 }
 
 .glow-btn:hover {
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.8);
+  box-shadow: 0 0 30px var(--theme-glow);
   transform: translateY(-2px);
 }
 
 /* Image Glow */
 .profile-glow {
   box-shadow:
-    0 0 30px rgba(59, 130, 246, 0.5),
-    0 0 80px rgba(59, 130, 246, 0.2);
+    0 0 30px var(--theme-glow),
+    0 0 80px var(--theme-glow-soft);
 }
 
 /* Social Icons */
@@ -276,5 +285,5 @@ body {
 
 .social-icon:hover {
   transform: translateY(-4px) scale(1.1);
-  color: #3b82f6;
+  color: var(--theme-primary);
 }

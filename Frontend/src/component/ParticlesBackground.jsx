@@ -8,11 +8,27 @@ const ParticlesBackground = () => {
     const ctx = canvas.getContext("2d");
 
     let particles = [];
+    let animationId;
+
     const particleCount = 120;
 
+    const getThemeColors = () => {
+      const rootStyles = getComputedStyle(document.documentElement);
+
+      return {
+        primary:
+          rootStyles.getPropertyValue("--theme-primary").trim() ||
+          "#3b82f6",
+
+        glow:
+          rootStyles.getPropertyValue("--theme-glow").trim() ||
+          "rgba(59,130,246,0.35)",
+      };
+    };
+
     const resizeCanvas = () => {
-     canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
     };
 
     resizeCanvas();
@@ -40,10 +56,16 @@ canvas.height = canvas.offsetHeight;
       }
 
       draw() {
+        const { primary } = getThemeColors();
+
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle="rgba(59,130,246,0.9)";
+
+        ctx.fillStyle = primary;
+
+        ctx.globalAlpha = 0.9;
         ctx.fill();
+        ctx.globalAlpha = 1;
       }
     }
 
@@ -54,6 +76,8 @@ canvas.height = canvas.offsetHeight;
     }
 
     function connectParticles() {
+      const { primary } = getThemeColors();
+
       for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
           const dx = particles[a].x - particles[b].x;
@@ -62,7 +86,8 @@ canvas.height = canvas.offsetHeight;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 170) {
-            ctx.strokeStyle="rgba(59,130,246,0.35)";
+            ctx.strokeStyle = primary;
+            ctx.globalAlpha = 0.35;
             ctx.lineWidth = 1;
 
             ctx.beginPath();
@@ -71,6 +96,8 @@ canvas.height = canvas.offsetHeight;
             ctx.lineTo(particles[b].x, particles[b].y);
 
             ctx.stroke();
+
+            ctx.globalAlpha = 1;
           }
         }
       }
@@ -86,7 +113,7 @@ canvas.height = canvas.offsetHeight;
 
       connectParticles();
 
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     }
 
     animate();
@@ -95,6 +122,7 @@ canvas.height = canvas.offsetHeight;
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationId);
     };
   }, []);
 

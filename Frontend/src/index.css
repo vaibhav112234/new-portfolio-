@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+:root {
+  --theme-primary: #3b82f6;
+  --theme-primary-hover: #2563eb;
+  --theme-secondary: #06b6d4;
+  --theme-accent: #60a5fa;
+
+  --theme-glow: rgba(59, 130, 246, 0.35);
+  --theme-glow-soft: rgba(59, 130, 246, 0.12);
+}
+
 /* :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -155,3 +165,143 @@ animation:spinSlow 20s linear infinite;
 
 }
 
+
+/* =========================================================
+   PORTFOLIO THEME OVERRIDES
+   Only changes colors.
+   Layout, spacing, animation and typography remain untouched.
+   ========================================================= */
+
+/* Primary text */
+
+[data-theme] .text-blue-400 {
+  color: var(--theme-accent) !important;
+}
+
+[data-theme] .text-blue-500 {
+  color: var(--theme-primary) !important;
+}
+
+[data-theme] .text-blue-300 {
+  color: var(--theme-accent) !important;
+}
+
+/* Primary backgrounds */
+
+[data-theme] .bg-blue-500 {
+  background-color: var(--theme-primary) !important;
+}
+
+[data-theme] .bg-blue-600 {
+  background-color: var(--theme-primary) !important;
+}
+
+[data-theme] .bg-blue-500\/10 {
+  background-color: color-mix(
+    in srgb,
+    var(--theme-primary) 10%,
+    transparent
+  ) !important;
+}
+
+[data-theme] .bg-blue-500\/20 {
+  background-color: color-mix(
+    in srgb,
+    var(--theme-primary) 20%,
+    transparent
+  ) !important;
+}
+
+[data-theme] .bg-blue-500\/30 {
+  background-color: color-mix(
+    in srgb,
+    var(--theme-primary) 30%,
+    transparent
+  ) !important;
+}
+
+/* Cyan backgrounds */
+
+[data-theme] .bg-cyan-400\/10 {
+  background-color: color-mix(
+    in srgb,
+    var(--theme-secondary) 10%,
+    transparent
+  ) !important;
+}
+
+[data-theme] .bg-cyan-500\/10 {
+  background-color: color-mix(
+    in srgb,
+    var(--theme-secondary) 10%,
+    transparent
+  ) !important;
+}
+
+/* Borders */
+
+[data-theme] .border-blue-500 {
+  border-color: var(--theme-primary) !important;
+}
+
+[data-theme] .border-blue-500\/30 {
+  border-color: color-mix(
+    in srgb,
+    var(--theme-primary) 30%,
+    transparent
+  ) !important;
+}
+
+[data-theme] .border-blue-500\/40 {
+  border-color: color-mix(
+    in srgb,
+    var(--theme-primary) 40%,
+    transparent
+  ) !important;
+}
+
+/* Hover text */
+
+[data-theme] .hover\:text-blue-400:hover {
+  color: var(--theme-accent) !important;
+}
+
+/* Hover backgrounds */
+
+[data-theme] .hover\:bg-blue-500:hover {
+  background-color: var(--theme-primary) !important;
+}
+
+[data-theme] .hover\:bg-blue-600:hover {
+  background-color: var(--theme-primary) !important;
+}
+
+[data-theme] .hover\:bg-blue-700:hover {
+  background-color: var(--theme-primary-hover) !important;
+}
+
+/* Focus */
+
+[data-theme] .focus\:border-blue-500:focus {
+  border-color: var(--theme-primary) !important;
+}
+
+/* Gradient */
+
+[data-theme] .from-blue-500 {
+  --tw-gradient-from: var(--theme-primary) !important;
+}
+
+[data-theme] .via-blue-500 {
+  --tw-gradient-via: var(--theme-primary) !important;
+}
+
+/* Theme glow */
+
+[data-theme] .shadow-blue-500\/30 {
+  --tw-shadow-color: var(--theme-glow) !important;
+}
+
+[data-theme] .shadow-blue-500\/40 {
+  --tw-shadow-color: var(--theme-glow) !important;
+}
