@@ -1,5 +1,3 @@
-
-
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
@@ -55,6 +53,7 @@ export default function About() {
                     <p className="text-blue-400 uppercase tracking-[5px]">
                         About Me
                     </p>
+
                     <h2 className="text-5xl text-amber-50 font-bold mt-4">
                         Passionate Full stack Developer
                     </h2>
@@ -115,6 +114,7 @@ export default function About() {
                                         <h4 className="text-4xl font-bold text-blue-400">
                                             {stat.value}
                                         </h4>
+
                                         <p className="text-slate-400 mt-2">
                                             {stat.label}
                                         </p>
@@ -183,38 +183,48 @@ export default function About() {
                                             top: `calc(50% + ${y}px - 50px)`,
                                             width: "100px",
                                             height: "100px",
+
                                             // Counter-rotate to keep text upright
                                             transform: `rotate(${-360}deg)`,
                                             transformOrigin: "center center",
-                                            // Glass effect with dynamic color on hover
+
+                                            // Existing hover UI — unchanged
                                             backgroundColor: isHovered
-                                                ? tech.brandColor + "30" // semi-transparent brand color
+                                                ? tech.brandColor + "30"
                                                 : "rgba(255,255,255,0.05)",
+
                                             backdropFilter: "blur(12px)",
+
                                             border: isHovered
                                                 ? `2px solid ${tech.brandColor}`
                                                 : "1px solid rgba(255,255,255,0.1)",
+
                                             boxShadow: isHovered
                                                 ? `0 0 30px ${tech.brandColor}40`
                                                 : "0 10px 30px rgba(0,0,0,0.2)",
                                         }}
                                     >
+                                        {/* Tech Icon */}
                                         <div
                                             className="text-4xl mb-2 transition-colors duration-300"
                                             style={{
+                                                // DEFAULT = selected theme color
+                                                // HOVER = original technology brand color
                                                 color: isHovered
                                                     ? tech.brandColor
-                                                    : "#60a5fa", // blue-400
+                                                    : "var(--theme-primary)",
                                             }}
                                         >
                                             {tech.icon}
                                         </div>
+
+                                        {/* Tech Name */}
                                         <p
                                             className="text-sm font-medium text-center transition-colors duration-300"
                                             style={{
                                                 color: isHovered
                                                     ? tech.brandColor
-                                                    : "#cbd5e1", // slate-300
+                                                    : "#cbd5e1",
                                             }}
                                         >
                                             {tech.name}
