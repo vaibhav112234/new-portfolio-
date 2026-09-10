@@ -89,7 +89,7 @@
 // export default Hero;
 
 
-import profile from "../assets/profile1.jpg";
+import profile from "../assets/vaibhav1.png";
 
 import resume from "../assets/Vaibhav_resume.pdf"
 
@@ -221,6 +221,7 @@ const Hero = () => {
           transition={{ duration: 1 }}
           className="flex justify-center"
         >
+          
           <div className="relative">
 
             {/* Glow */}

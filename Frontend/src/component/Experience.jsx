@@ -5,6 +5,9 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
+import PremiumTechObject from "./PremiumTechObject";
+import Developer3DObject from "./Developer3DObject";
+
 const experiences = [
   {
     company: "Softlabs Group",
@@ -23,7 +26,7 @@ const experiences = [
       "MySQL",
       "Docker",
       "Node Js",
-      "Next Js"
+      "Next Js",
     ],
   },
 
@@ -111,11 +114,72 @@ export default function Experience() {
               }`}
             >
 
-              {/* Timeline Dot */}
+              {/* ====================================== */}
+              {/* 3D MODEL - OPPOSITE SIDE OF TIMELINE */}
+              {/* ====================================== */}
+
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  scale: 0.8,
+                  x: index % 2 === 0 ? 60 : -60,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                  x: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.2,
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.15,
+                  ease: "easeOut",
+                }}
+                className={`
+                  hidden md:flex
+                  absolute
+                  top-1/2
+                  -translate-y-1/2
+                  w-[42%]
+                  h-[360px]
+                  items-center
+                  justify-center
+                  pointer-events-auto
+                  z-10
+                  ${
+                    index % 2 === 0
+                      ? "right-[-2%]"
+                      : "left-[-2%]"
+                  }
+                `}
+              >
+
+                {/* First Experience Model */}
+
+                {index === 0 && (
+                  <PremiumTechObject />
+                )}
+
+                {/* Second Experience Model */}
+
+                {index === 1 && (
+                  <Developer3DObject />
+                )}
+
+              </motion.div>
+
+              {/* ====================================== */}
+              {/* TIMELINE DOT */}
+              {/* ====================================== */}
 
               <div className="absolute left-5 md:left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 shadow-[0_0_25px_rgba(59,130,246,.7)] border-4 border-slate-950" />
 
-              {/* Card */}
+              {/* ====================================== */}
+              {/* EXPERIENCE CARD */}
+              {/* ====================================== */}
 
               <motion.div
                 whileHover={{
@@ -125,14 +189,20 @@ export default function Experience() {
                 className="ml-16 md:ml-0 md:w-[45%] rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:shadow-[0_0_40px_rgba(59,130,246,.25)] transition-all duration-500"
               >
 
+                {/* Company */}
+
                 <div className="flex items-center gap-3 text-blue-400 mb-3">
                   <FaBriefcase />
                   <span>{item.company}</span>
                 </div>
 
+                {/* Role */}
+
                 <h3 className="text-2xl font-bold text-white">
                   {item.role}
                 </h3>
+
+                {/* Duration + Location */}
 
                 <div className="flex flex-wrap gap-6 mt-4 text-slate-400 text-sm">
 
@@ -148,9 +218,13 @@ export default function Experience() {
 
                 </div>
 
+                {/* Description */}
+
                 <p className="text-slate-300 mt-6 leading-8">
                   {item.description}
                 </p>
+
+                {/* Technologies */}
 
                 <div className="flex flex-wrap gap-3 mt-8">
 
