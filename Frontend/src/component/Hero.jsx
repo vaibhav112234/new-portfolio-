@@ -89,7 +89,7 @@
 // export default Hero;
 
 
-import profile from "../assets/vaibhav1.png";
+import profile from "../assets/profile1.jpg";
 
 import resume from "../assets/Vaibhav_resume.pdf"
 
